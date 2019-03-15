@@ -24,6 +24,9 @@ import io.ktor.client.request.get
 import io.ktor.util.KtorExperimentalAPI
 import mu.KotlinLogging
 import java.io.IOException
+import kotlin.reflect.KClass
+import kotlin.reflect.full.companionObject
+import kotlin.reflect.full.declaredMemberProperties
 
 private val logger = KotlinLogging.logger {}
 
@@ -31,14 +34,16 @@ private const val wikiUrl = "https://oldschool.runescape.wiki"
 
 /** Scrapes the wiki and retrieves the wiki text.*/
 @KtorExperimentalAPI
-suspend fun scrapeWikiText(type: WikiTextParser<*>, id: Int, name: String): String {
+suspend fun <P : WikiTextParser<P>>scrapeWikiText(type: KClass<P>, id: Int, name: String): String {
+    val wikiType = type.companionObject!!.declaredMemberProperties.find { it.name == "queryString" }!!
+        .getter.call(type.companionObject) as String
     HttpClient(CIO) {
         followRedirects = false
     }.use { client ->
         val queryUrl = if(name.contains("%")) {
-            "$wikiUrl/w/Special:Lookup?type=${type.queryString}&id=$id"
+            "$wikiUrl/w/Special:Lookup?type=$wikiType&id=$id"
         } else {
-            "$wikiUrl/w/Special:Lookup?type=${type.queryString}&id=$id&name=$name"
+            "$wikiUrl/w/Special:Lookup?type=$wikiType&id=$id&name=$name"
         }
         logger.info("REQUEST - QUERY - $queryUrl")
         val redirect = client.call(queryUrl).response.headers["location"]

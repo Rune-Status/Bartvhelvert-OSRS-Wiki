@@ -26,8 +26,6 @@ import kotlin.reflect.full.createInstance
 private val logger = KotlinLogging.logger {}
 
 abstract class WikiTextParser<P : WikiTextParser<P>> {
-    abstract val queryString: String
-
     var ids: List<Int>? = null
 
     @Suppress("UNCHECKED_CAST")

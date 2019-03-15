@@ -21,8 +21,6 @@ import io.guthix.osrs.wiki.WikiTextParser
 import java.time.LocalDate
 
 class ItemWikiDefinition : WikiTextParser<ItemWikiDefinition>() {
-    override val queryString get() = "item"
-
     var versionType: String? = null
     var name: String? = null
     var releaseDate: LocalDate? = null
@@ -131,5 +129,9 @@ class ItemWikiDefinition : WikiTextParser<ItemWikiDefinition>() {
         line.checkWikiKey("mdmg", version) -> magicDamageBonus = line.getWikiInt()
         line.checkWikiKey("prayer", version) -> prayerBonus = line.getWikiInt()
         else -> { }
+    }
+
+    companion object {
+        @JvmField val queryString = "item"
     }
 }

@@ -21,9 +21,6 @@ import io.guthix.osrs.wiki.WikiTextParser
 import java.time.LocalDate
 
 class NpcWikiDefinition : WikiTextParser<NpcWikiDefinition>() {
-
-    override val queryString get() = "npc"
-
     var versionType: String? = null
     var name: String? = null
     var release: LocalDate? = null
@@ -134,7 +131,7 @@ class NpcWikiDefinition : WikiTextParser<NpcWikiDefinition>() {
         }
     }
 
-    override fun toString(): String {
-        return "NpcWikiDefinition(versionType=$versionType, name=$name, release=$release, update=$update, isMembers=$isMembers, examine=$examine, slayerLevel=$slayerLevel, slayerXp=$slayerXp, isAggressive=$isAggressive, isPoisonous=$isPoisonous, weakness=$weakness, combatLvl=$combatLvl, hitPoints=$hitPoints, attackStyle=$attackStyle, maxHit=$maxHit, attackSpeed=$attackSpeed, isImmuneToPoison=$isImmuneToPoison, isImmuneToVenom=$isImmuneToVenom, category=$category, assignedBySlayerMasters=$assignedBySlayerMasters, attackStat=$attackStat, strengthStat=$strengthStat, defenceStat=$defenceStat, mageStat=$mageStat, rangeState=$rangeState, attBonusStab=$attBonusStab, attBonusSlash=$attBonusSlash, attBonusCrush=$attBonusCrush, attBonusMagic=$attBonusMagic, attBonusRange=$attBonusRange, defBonusStab=$defBonusStab, defBonusSlash=$defBonusSlash, defBonusCrush=$defBonusCrush, defBonusMagic=$defBonusMagic, defBonusRange=$defBonusRange, strengthBonus=$strengthBonus, rangeStrengthBonus=$rangeStrengthBonus, attackBonus=$attackBonus, magicBonus=$magicBonus)"
+    companion object {
+        @JvmField val queryString = "npc"
     }
 }
